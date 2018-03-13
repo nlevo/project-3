@@ -4,8 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require("mongoose");
+var session = require('express-session');
+var passport = require('passport');
+var cors = require('cors');
 
-var index = require('./routes/index');
+require('./configs/passport-config');
+
+mongoose.connect('mongodb://localhost/myTry')
+
 var users = require('./routes/users');
 
 var app = express();
@@ -22,8 +29,31 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+// add session stuff
+app.use(session({
+  secret:"some secret goes here",
+  resave: true,
+  saveUninitialized: true
+}));
+// add passport stuff
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(
+  cors({
+    credentials: true,                 // allow other domains to send cookies
+    origin: ["http://localhost:4200"]  // these are the domains that are allowed
+  })
+);
+
+// ============ routes ===================
+
+var authRoutes = require("./routes/auth-routes");
+app.use("/", authRoutes);
+
+var phoneRoutes = require("./routes/phone-routes");
+app.use("/", phoneRoutes);
+
+// =======================================
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
