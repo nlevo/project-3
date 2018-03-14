@@ -6,6 +6,7 @@ const PropertySchema = new Schema({
             type: String, 
             required: true,
         },
+        isActive: Boolean,
         address: {
             apartment_num: String,
             street: String,

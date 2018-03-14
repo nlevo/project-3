@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <div class="wrapper">
+    <div *ngIf="this.router.url !== '/signup' && this.router.url !== '/'"  class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -102,7 +102,7 @@
                 </div>
             </nav>
             <div class="content">
-                <app-property-table></app-property-table>
+                    <router-outlet></router-outlet>
             </div>
             <footer class="footer">
                 <div class="container-fluid">
@@ -110,6 +110,9 @@
             </footer>
         </div>
     </div>
+
+    <app-login></app-login>
+
 
 </body>
 <!--   Core JS Files   -->

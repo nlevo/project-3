@@ -8,6 +8,7 @@ const OwnerSchema = new Schema({
             middle: String,
             company: String,
         },
+        isActive: Boolean,
         phone: [String],
         email: String,
         website: String,

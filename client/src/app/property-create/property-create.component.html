@@ -1,0 +1,46 @@
+
+               <form #entryForm> 
+                 <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header" data-background-color="green">
+                                    <h4 class="title">Add a new property</h4>
+                                </div>
+                                <div class="card-content">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Name</label>
+                                                    <input id="name" [(ngModel)]="property.name" name="name" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Floor plan</label>
+                                                    <input id="floor_plan" [(ngModel)]="property.floor_plan" name="floor_plan" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label"> Comments:</label>
+                                                        <textarea id="comments" [(ngModel)]="property.comments" name="comments" class="form-control" rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button (click)="submitEntry()" class="btn btn-success pull-right">Save property</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </form>
+            
+            

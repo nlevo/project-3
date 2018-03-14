@@ -99,9 +99,9 @@ authRoutes.get("/api/checklogin", (req, res, next) => {
 
   // Clear the encryptedPassword before sending
   // (not from the database, just from the object)
-//   req.user.encryptedPassword = undefined;
+    req.user.encryptedPassword = undefined;
 
-//   res.status(200).json(req.user);
+    //res.status(200).json(req.user);
 res.status(401).json({ message: "Unauthorized." });
 });
 

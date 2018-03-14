@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-centered">
+            <div class="card" >
+                <div class="row d-flex justify-content-center">
+                    <a class="btn btn-success card-header active col-md-5"[routerLink]="['/']">Login</a>
+                    <a class="btn btn-success card-header col-md-5" [routerLink]="['/signup']" >Signup</a>
+                </div>
+                <div class="card-content">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Email address</label>
+                                    <input [(ngModel)]="formInfo.email" name="email" type="email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Password</label>
+                                    <input type="text"  [(ngModel)]="formInfo.password" name="password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success pull-right">Login<i style="padding-left: 1em" class="material-icons right">send</i></button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

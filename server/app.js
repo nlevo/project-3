@@ -50,8 +50,8 @@ app.use(
 var authRoutes = require("./routes/auth-routes");
 app.use("/", authRoutes);
 
-var phoneRoutes = require("./routes/phone-routes");
-app.use("/", phoneRoutes);
+var propertyRoutes = require("./routes/property-routes");
+app.use("/", propertyRoutes);
 
 // =======================================
 
