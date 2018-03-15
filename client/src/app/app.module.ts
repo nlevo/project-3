@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,6 +12,7 @@ import { PropertyCreateComponent } from './property-create/property-create.compo
 import { LoginComponent } from './login/login.component';
 import { SessionService } from "./services/session-service.service";
 import { RegisterComponent } from './register/register.component';
+import { AuthenticationService } from "./services/authentification-service.service";
 
 const routes: Routes = [
   { path: 'properties', component: PropertyTableComponent },
@@ -36,7 +38,7 @@ const routes: Routes = [
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [SessionService],
+  providers: [SessionService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

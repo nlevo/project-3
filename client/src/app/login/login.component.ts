@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
               private router: Router,) { }
 
   ngOnInit() {
-    this.session.isLoggedIn()
-      .subscribe(
-        (user) => this.successCb(user)
-      );
+    // this.session.isLoggedIn()
+    //   .subscribe(
+    //     (user) => this.successCb(user)
+    //   );
   }
 
   login() {
