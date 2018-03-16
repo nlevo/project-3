@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
+import { environment } from '../../environments/environment'
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -12,28 +13,33 @@ export class UserServiceService {
   constructor(private http: Http) { }
 
   getUsers(){
-    return this.http.get(`${this.BASE_URL}/users`)
+    return this.http.get(`${this.BASE_URL}/users`, { withCredentials:true} )
       .toPromise()
       .then((res: Response) => res.json())
   }
 
   getUser(id){
-    return this.http.get(`${this.BASE_URL}/users/${id}`)
+    return this.http.get(`${this.BASE_URL}/users/${id}`, { withCredentials:true} )
       .toPromise()
       .then((res: Response) => res.json())
   }
 
-  createUser(newUser){
-    const stringified = JSON.stringify(newUser);
-    const options = { headers: this.headers };
-
-    return this.http.post(
-      `${this.BASE_URL}/users`,
-      stringified,
-      options
-    )
-      .toPromise()
-      .then((response: Response) => response.json())
-      .catch((error: Response) => Promise.reject(error ))
+  createNewUser(userData){
+    return this.http.post( `${environment.apiBase}/api/users/new`, userData,
+    { withCredentials: true })
+    .toPromise()
+    .then( res => res.json() )
   }
+
+  deleteUser(id){
+    return this.http.delete(`${environment.apiBase}/api/users/${id}`,
+        { withCredentials: true })
+        .toPromise()
+  }
+
+  updateUser(id, updates){
+    return this.http.put(`${environment.apiBase}/api/users/${id}`, updates, { withCredentials: true })
+    .map(res => res.json());
+  }
+
 }

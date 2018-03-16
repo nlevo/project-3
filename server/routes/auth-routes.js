@@ -3,6 +3,7 @@ const express = require('express');
 const bcrypt = require("bcrypt");
 const passport = require('passport');
 
+
 const User = require('../models/user-model');
 
 const authRoutes = express.Router();
@@ -12,7 +13,7 @@ authRoutes.post('/api/signup', (req, res, next) => {
         res.status(400).json({message: "Please provide both, username and password."});
         return;
     }
-    User.findOne({ username: req.body.signUpEmail}, (err, userFromDb)=>{
+    User.findOne({ email: req.body.signUpEmail}, (err, userFromDb)=>{
         
         if(err){
             res.status(500).json({message: "Username check went bad."});
@@ -29,7 +30,8 @@ authRoutes.post('/api/signup', (req, res, next) => {
         
         const theUser = new User({
            email: req.body.signUpEmail,
-           encryptedPassword: scrambledPassword 
+           encryptedPassword: scrambledPassword ,
+           phone: req.body.signUpPhone
         });
         theUser.save((err)=> {
             if(err){
@@ -55,10 +57,11 @@ authRoutes.post('/api/signup', (req, res, next) => {
 });
 
 authRoutes.post('/api/login', (req, res, next) => {
+    
     const authenticateFunction = passport.authenticate('local', (err, theUser, failureDetails) => {
 
         if(err){
-            re.status(500).json({message: "Unknown error just happened while login."});
+            res.status(500).json({message: "Unknown error just happened while login."});
             return;
         }
         if (!theUser) {
@@ -82,6 +85,7 @@ authRoutes.post('/api/login', (req, res, next) => {
             res.status(200).json(theUser);
         });
     });
+   
     authenticateFunction(req, res, next);
 });
 
@@ -92,14 +96,16 @@ authRoutes.post("/api/logout", (req, res, next) => {
 });
 
 authRoutes.get("/api/checklogin", (req, res, next) => {
-  if (req.isAuthenticated()) {
+
+ if (req.isAuthenticated()) {
+    
     res.status(200).json(req.user);
     return;
   }
 
   // Clear the encryptedPassword before sending
   // (not from the database, just from the object)
-    req.user.encryptedPassword = undefined;
+    //req.user.encryptedPassword = undefined;
 
     //res.status(200).json(req.user);
 res.status(401).json({ message: "Unauthorized." });
@@ -117,7 +123,6 @@ function gtfoIfNotLogged(req, res, next) {
 authRoutes.get("/api/private", gtfoIfNotLogged, (req, res, next) => {
   res.json({ message: "Todays lucky number is 7677" });
 });
-
 
 
 module.exports = authRoutes;

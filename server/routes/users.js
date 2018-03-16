@@ -14,8 +14,41 @@ const myUploader = multer({
 });
 
 
-// list the users
 
+// create new user
+userRoutes.post('/api/users/new', myUploader.single('phoneImage'), (req, res, next) => {
+  if(!req.user){
+      res.status(401).json({message: "Log in to create user."});
+      return;
+  }
+  const newUser = new User({
+    phone: req.body.phone,
+    email: req.body.email,
+  
+  });
+  if(req.file){
+      newUser.image = '/uploads/' + req.file.filename;
+  }
+
+  newUser.save((err) => {
+      if(err){
+          res.status(500).json({message: "Some weird error from DB."});
+          return;
+      }
+      // validation errors
+      if (err && newUser.errors){
+          res.status(400).json({
+              brandError: newUser.errors.email,
+          });
+          return;
+      }
+      //req.user.encryptedPassword = undefined;
+      //newPhone.user = req.user;
+
+      res.status(200).json(newUser);
+  });
+});
+// list the users
 userRoutes.get('/api/users', (req, res, next) => {
     if (!req.user) {
       res.status(401).json({ message: "Log in to see properties." });
@@ -37,7 +70,7 @@ userRoutes.get('/api/users', (req, res, next) => {
 // list single User
 userRoutes.get("/api/users/:id", (req, res, next) => {
   if (!req.user) {
-    res.status(401).json({ message: "Log in to see THE users." });
+    res.status(401).json({ message: "Log in to see the users." });
     return;
   }
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {

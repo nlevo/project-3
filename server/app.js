@@ -53,6 +53,9 @@ app.use("/", authRoutes);
 var propertyRoutes = require("./routes/property-routes");
 app.use("/", propertyRoutes);
 
+var userRoutes = require("./routes/users");
+app.use("/", userRoutes);
+
 // =======================================
 
 // catch 404 and forward to error handler

@@ -1,7 +1,5 @@
 const passport = require("passport");
-//for passwords
 const bcrypt = require("bcrypt");
-
 const LocalStrategy = require("passport-local").Strategy;
 
 const UserModel = require("../models/user-model");
@@ -28,11 +26,11 @@ passport.use(
   new LocalStrategy(
     // loginUsername and loginPassword are fields that we use to check if our login works
     {
-      usernameField: "loginUsername", // sent through AJAX from Angular
+      usernameField: "loginEmail", // sent through AJAX from Angular
       passwordField: "loginPassword" // sent through AJAX from Angular
     },
-    (theUsername, thePassword, next) => {
-      UserModel.findOne({ username: theUsername }, (err, userFromDb) => {
+    (theEmail, thePassword, next) => {
+      UserModel.findOne({ email: theEmail }, (err, userFromDb) => {
         if (err) {
           next(err);
           return;

@@ -1,65 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { SessionService } from "../services/session-service.service";
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+
+import { AuthService } from "../services/authentification-service.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-
-  user: any;
-  formInfo = {
-    username: '',
-    password: ''
+  // isLoggedOut: boolean = false;
+  loginInfo = {
+    email: "",
+    password: ""
   };
-  error: string;
-  privateData: any = '';
 
-  constructor(private session: SessionService, 
-              private route: ActivatedRoute,
-              private router: Router,) { }
+  errorMessage: string;
+
+  constructor(private myAuthService: AuthService, private myRouter: Router) {}
 
   ngOnInit() {
-    // this.session.isLoggedIn()
-    //   .subscribe(
-    //     (user) => this.successCb(user)
-    //   );
+    this.myAuthService
+      .checklogin()
+      // If success, we are logged in.
+      .then(resultFromApi => {
+        this.myRouter.navigate(["/dashboard"]);
+      })
+
+      // Even if you don't do anything on error, catch to avoid a console error.
+      .catch(err => {
+        console.log(err);
+      });
   }
 
-  login() {
-    this.session.login(this.formInfo)
-      .subscribe(
-        (user) => this.successCb(user),
-        (err) => this.errorCb(err)
-      );
-  }
+  doLogin() {
+    this.myAuthService
+      .login(this.loginInfo)
+      .then(resultFromApi => {
+        // clear the form
+        this.loginInfo = {
+          email: "",
+          password: ""
+        };
 
-  signup() {
-    this.session.signup(this.formInfo)
-      .subscribe(
-        (user) => this.successCb(user),
-        (err) => this.errorCb(err)
-      );
-  }
+        // clear the error message
+        this.errorMessage = "";
 
-  logout() {
-    this.session.logout()
-      .subscribe(
-        () => this.successCb(null),
-        (err) => this.errorCb(err)
-      );
+        // redirect to /phones
+        this.myRouter.navigate(["/dashboard"]);
+      })
+      .catch(err => {
+        const parsedError = err.json();
+        this.errorMessage = parsedError.message + " 😤";
+      });
   }
-
-  errorCb(err) {
-    this.error = err;
-    this.user = null;
-  }
-
-  successCb(user) {
-    this.user = user;
-    this.error = null;
-  }
-
 }

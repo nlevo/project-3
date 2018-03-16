@@ -1,49 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from "../services/session-service.service";
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from "@angular/router";
+
+import { AuthService } from "../services/authentification-service.service";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"]
 })
-export class RegisterComponent implements OnInit {
-  user: any;
-  formInfo = {
-    email: '',
-    password: '',
-    phone: ''
+export class SignupComponent implements OnInit {
 
-  };
-  error: string;
-  privateData: any = '';
+  constructor(private myAuth: AuthService, private myRouter: Router) {}
 
-  constructor(private session: SessionService,
-              private router: Router,) { }
-
-  ngOnInit() {
-    this.session.isLoggedIn()
-      .subscribe(
-        (user) => this.successCb(user)
-      );
+  errorMessage:String;
+  signUpInfo={
+    email:"",
+    password:"",
+    phone: ""
   }
+  ngOnInit() {}
 
-  signup() {
-    this.session.signup(this.formInfo)
-      .subscribe(
-        (user) => this.successCb(user),
-        (err) => this.errorCb(err)
-      );
-  }
+  doSignUp() {
+    this.myAuth
+      .signup(this.signUpInfo)
+      .then(resultFromApi => {
+        // clear form
+        this.signUpInfo = { email: "", password: "" , phone: ""};
 
+        // clear error message
+        this.errorMessage = "";
 
-  errorCb(err) {
-    this.error = err;
-    this.user = null;
-  }
-
-  successCb(user) {
-    this.user = user;
-    this.error = null;
-  }
+        // redirect to /phones
+        this.myRouter.navigate(["/dashboard"]);
+      })
+      .catch(err => {
+        const parsedError = err.json();
+        this.errorMessage = parsedError.message + " 😤";
+      });
+  } //close doSignUp()
 }

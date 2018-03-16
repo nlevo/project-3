@@ -11,16 +11,30 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PropertyCreateComponent } from './property-create/property-create.component';
 import { LoginComponent } from './login/login.component';
 import { SessionService } from "./services/session-service.service";
-import { RegisterComponent } from './register/register.component';
-import { AuthenticationService } from "./services/authentification-service.service";
+import { SignupComponent } from './register/register.component';
+import { AuthService } from "./services/authentification-service.service";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserServiceService} from './services/user-service.service';
+
+//for image uploads
+import { FileUploadModule } from "ng2-file-upload";
+import { UserListComponent } from './user-list/user-list.component';
+
 
 const routes: Routes = [
   { path: 'properties', component: PropertyTableComponent },
+  { path: 'users/new', component: UserCreateComponent},
   { path: 'users/:id', component: UserProfileComponent},
+  { path: 'users', component: UserListComponent},
   { path: 'properties/new', component: PropertyCreateComponent},
+  { path: 'signup', component: SignupComponent},
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'logout', redirectTo: ''},
   { path: '', component: LoginComponent},
-  { path: 'signup', component: RegisterComponent},
-  { path: '**', redirectTo: ''}
+
+  { path: '**', redirectTo: 'dashboard'}
+  
 ];
 
 @NgModule({
@@ -30,15 +44,19 @@ const routes: Routes = [
     UserProfileComponent,
     PropertyCreateComponent,
     LoginComponent,
-    RegisterComponent
+    SignupComponent,
+    DashboardComponent,
+    UserCreateComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FileUploadModule
   ],
-  providers: [SessionService, AuthenticationService],
+  providers: [SessionService, AuthService, UserServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

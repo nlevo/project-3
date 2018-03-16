@@ -6,24 +6,24 @@ const UserSchema = new Schema({
         type: String, 
         required: true 
         },
-    isActive: Boolean,
+    status: Boolean,
     encryptedPassword: {
         type: String,
-        required: true
+        required: true,
         },
     name: {
-        first: String,
-        last: String,
+        first: { type: String, default: ''},
+        last:  { type: String, default: ''},
         },
-    phone: [String],
-    about: String,
+    phone: { type: String, default: ''},
+    about: { type: String, default: ''},
     department: {
         type: String,
         enum: ['None', 'Housekeeping', 'Maintenance', 'Front Desk', 'Owner Relation', 'Executive'],
         default: 'None'
         },
-    position: String,
-    access_privileges: {
+    position: { type: String, default: ''},
+    access: {
         type: 'String',
         enum: ['Employee', 'Admin', 'Executive'],
         default: 'Employee'
