@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const multer = require('multer');
 const userRoutes = express.Router();
+const bcrypt = require("bcrypt");
 
 const User = require('../models/user-model')
 
@@ -84,14 +85,15 @@ userRoutes.get("/api/users/:id", (req, res, next) => {
       res.status(500).json({ message: "User find went bad." });
       return;
     }
-
+    theUser.encryptedPassword = "";
     res.status(200).json(theUser);
   });
 });
 
 // update the User
 userRoutes.put('/api/users/:id', (req, res, next) => {
-    if (!req.user) {
+  console.log("User object is: ", req.body);
+  if (!req.user) {
       res.status(401).json({ message: "Log in to update the user." });
       return;
     }
@@ -101,10 +103,23 @@ userRoutes.put('/api/users/:id', (req, res, next) => {
     }
 
     const updates = {
-      name: req.body.name,
+      phone: req.body.phone,
+      department: req.body.department,
+      position: req.body.position,
+      access: req.body.access,
       email: req.body.email,
-      phone: req.body.phone
+      encryptedPassword: '',
+      status: req.body.status,
+      name: {first: req.body.name.first, last: req.body.name.last}
     };
+    
+    if(req.body.encryptedPassword.length !== 0){ 
+      const salt = bcrypt.genSaltSync(10);
+      const scrambledPassword = bcrypt.hashSync(req.body.encryptedPassword, salt);
+      updates.encryptedPassword = scrambledPassword;
+    } else { //if user doesnt supply a new password, then keep the old one
+      delete updates.encryptedPassword; 
+    }
 
   User.findByIdAndUpdate(req.params.id, updates, err => {
     if (err) {

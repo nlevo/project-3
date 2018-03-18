@@ -14,6 +14,9 @@ export class AppComponent {
     this.router = _router;
   }
 
+  ngOnInit() {
+  }
+
   logOut(){
     this.myAuthService.logout();
   }

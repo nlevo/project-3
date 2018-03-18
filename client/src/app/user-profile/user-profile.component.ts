@@ -3,31 +3,34 @@ import { ActivatedRoute, Router} from '@angular/router';
 import { UserServiceService } from '../services/user-service.service';
 import { AuthService } from '../services/authentification-service.service';
 
-
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  styleUrls: ['./user-profile.component.css'],
+  
 })
 export class UserProfileComponent implements OnInit {
-  user = <any>{}
+  user = <any>{};
 
-  public updatedUser: Object = {
-    name: { first: String, last: String},
-    password: String,
-    phone: String,
-    status: String,
-    department: String,
-    access: String,
-    position: String
+  public updatedUser = {
+    // name: { first: String, last: String},
+    // password: String,
+    // phone: String,
+    // status: String,
+    // department: String,
+    // access: String,
+    // position: String
   }
 
+
+
+  public isDataAvailable:boolean = false;
+    
   constructor(
     private usersService: UserServiceService,
     private myAuthService: AuthService,
     private myRouter: Router,
-    private myRoute: ActivatedRoute
+    private myRoute: ActivatedRoute 
   ) { }
 
   ngOnInit() {
@@ -50,6 +53,7 @@ export class UserProfileComponent implements OnInit {
     this.usersService.getUser(parameter)
     .then( res => {
       this.user = res;
+      this.isDataAvailable = true;
     })
     .catch()
   }
@@ -78,8 +82,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   sendUpdatesToApi(id){
-    console.log("updates:", this.updatedUser)
-    this.usersService.updateUser(id, this.updatedUser)
+    console.log("updates:", this.user)
+    this.usersService.updateUser(id, this.user)
       .toPromise()
       .then(()=>{
         this.myRouter.navigate(['/users'])

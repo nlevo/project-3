@@ -10,7 +10,7 @@ import { AuthService } from '../services/authentification-service.service';
 })
 export class UserListComponent implements OnInit {
   users: Object[]
-  //user: { name: string, first: string, last: string, phone: string } = { name: '', first: '', last: '', phone: '' }
+  user: { name: string, first: string, last: string, phone: string } = { name: '', first: '', last: '', phone: '' }
 
   constructor(
     private usersService: UserServiceService,
@@ -31,9 +31,11 @@ export class UserListComponent implements OnInit {
         console.log(err);
         this.myRouter.navigate(["/"]);
       });
+      
     this.myRoute.params.subscribe(params => {
       this.getUsersList();
     });
+    
   }
 
   getUsersList(){
