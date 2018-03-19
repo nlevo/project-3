@@ -6,6 +6,11 @@ const PropertySchema = new Schema({
             type: String, 
             required: true,
         },
+        building: { 
+            type: String, 
+            required: true,
+        },
+        unit: String,
         isActive: Boolean,
         address: {
             apartment_num: String,

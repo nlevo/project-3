@@ -18,22 +18,34 @@ const myUploader = multer({
 
 // create new user
 userRoutes.post('/api/users/new', myUploader.single('phoneImage'), (req, res, next) => {
+  console.log("REQ BODY:" ,req.body);
   if(!req.user){
       res.status(401).json({message: "Log in to create user."});
       return;
   }
   const newUser = new User({
     phone: req.body.phone,
-    email: req.body.email,
-  
+    department: req.body.department,
+    position: req.body.position,
+    access: req.body.access,
+    email: req.body.email.toLowerCase(),
+    encryptedPassword: req.body.encryptedPassword,
+    status: req.body.status,
+    name: {first: req.body.name.first, last: req.body.name.last}
   });
+
+  const salt = bcrypt.genSaltSync(10);
+  const scrambledPassword = bcrypt.hashSync(req.body.encryptedPassword, salt);
+  newUser.encryptedPassword = scrambledPassword;
+
   if(req.file){
       newUser.image = '/uploads/' + req.file.filename;
   }
-
+  console.log("NEW USER:" ,newUser);
   newUser.save((err) => {
       if(err){
           res.status(500).json({message: "Some weird error from DB."});
+          console.log(err);
           return;
       }
       // validation errors
@@ -41,6 +53,7 @@ userRoutes.post('/api/users/new', myUploader.single('phoneImage'), (req, res, ne
           res.status(400).json({
               brandError: newUser.errors.email,
           });
+          console.log(err);
           return;
       }
       //req.user.encryptedPassword = undefined;
@@ -107,7 +120,7 @@ userRoutes.put('/api/users/:id', (req, res, next) => {
       department: req.body.department,
       position: req.body.position,
       access: req.body.access,
-      email: req.body.email,
+      email: req.body.email.toLowerCase(),
       encryptedPassword: '',
       status: req.body.status,
       name: {first: req.body.name.first, last: req.body.name.last}

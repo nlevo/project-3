@@ -16,10 +16,27 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
         res.status(401).json({message: "Log in to create property."});
         return;
     }
-    const newPhone = new Property({
-      name: req.body.name,
+    const newProperty = new Property({
+      name: req.body.name, 
+      building: req.body.building, 
+      unit: req.body.unit,
+      isActive: req.body.isActive,
+      address: {
+        apartment_num: req.body.apartment_num,
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+      },
+      effective_date: req.body.effective_date,
+      end_date: req.body.end_date,
       floor_plan: req.body.floor_plan,
-      comments: req.body.comments
+      max_occupancy: req.body.max_occupancy,
+      comments: req.body.comments,
+      special_instructions: req.body.special_instructions,
+      rating: req.body.rating,
+      bathrooms: req.body.bathrooms,
+      bedrooms: []
     });
     if(req.file){
         newProperty.image = '/uploads' + req.file.filename;
@@ -28,6 +45,7 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
     newProperty.save((err) => {
         if(err){
             res.status(500).json({message: "Some weird error from DB."});
+            console.log(err);
             return;
         }
         // validation errors
@@ -37,10 +55,7 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
             });
             return;
         }
-        req.user.encryptedPassword = undefined;
-        newProperty.user = req.user;
-
-        res.status(200).json(newPhone);
+        res.status(200).json(newProperty);
     });
 });
 

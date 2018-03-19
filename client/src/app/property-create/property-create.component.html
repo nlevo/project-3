@@ -1,46 +1,94 @@
-
-               <form #entryForm> 
-                 <div class="container-fluid">
+<div class="offset-md-2 col-md-8">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-text">
+              <div class="card-text">
+                <h4 class="card-title">Create Property</h4>
+              </div>
+            </div>
+            <div class="card-body col-12">
+              <form (ngSubmit)="saveNewProperty()" #myForm="ngForm" class="form-horizontal">
+                 <div class="row">
+                  <label class="col-sm-2 col-form-label">Name</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.name" name="name" type="text" class="form-control">
+                    </div>
+                  </div>
+                  <label class="col-sm-2 col-form-label">Building</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.building" name="building" type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">Unit</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.unit" name="unit" type="text" class="form-control">
+                    </div>
+                  </div>
+                  <label class="col-sm-2 col-form-label">Street</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.address.street" value="property.address.street" name="street" type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  
+                  <label class="col-sm-2 col-form-label">City</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.address.city" name="city" type="text" class="form-control">
+                    </div>
+                  </div>
+                  <label class="col-sm-2 col-form-label">State</label>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.address.state" name="state" type="text" class="form-control">
+                    </div>
+                  </div>
+                  <label class="col-sm-1 col-form-label">Zip</label>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <input [(ngModel)]="property.address.zip" name="zip" type="number" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">Profile status</label>
+                  <div class="col-sm-10 checkbox-radios">
+                    <div class="form-check d-inline-block">
+                      <label class="form-check-label">
+                        <input [(ngModel)]="property.isActive" name="status" class="form-check-input" type="checkbox"> Active user
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header" data-background-color="green">
-                                    <h4 class="title">Add a new property</h4>
-                                </div>
-                                <div class="card-content">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Name</label>
-                                                    <input id="name" [(ngModel)]="property.name" name="name" type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Floor plan</label>
-                                                    <input id="floor_plan" [(ngModel)]="property.floor_plan" name="floor_plan" type="number" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="form-group label-floating">
-                                                        <label class="control-label"> Comments:</label>
-                                                        <textarea id="comments" [(ngModel)]="property.comments" name="comments" class="form-control" rows="5"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button (click)="submitEntry()" class="btn btn-success pull-right">Save property</button>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
+                        <label class="col-sm-2 col-form-label">Effective Date</label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            <input [(ngModel)]="property.effective_date" name="effective_date" type="date" class="form-control">
+                            </div>
+                        </div>
+                        <label class="col-sm-2 col-form-label">End Date <br>(optional) </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            <input [(ngModel)]="property.end_date" name="end_date" type="date" class="form-control">
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div *ngIf="errorMessage" class="row"> <small>{{errorMessage}}</small> </div>
+                       <div class="row">
+                            <div class="col-sm-2 float-left"><button [routerLink]="['/dashboard']" type="submit" class="btn btn-fill btn-default">Cancel</button></div>
+                            <div class="offset-sm-8 col-sm-2 float-right"><button type="submit" class="btn btn-fill btn-rose">Save  </button></div>
+                       </div>
               </form>
-            
-            
+            </div>
+          </div> 
+       </div>

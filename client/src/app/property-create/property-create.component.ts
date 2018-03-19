@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyEntriesService } from '../services/property-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property-create',
@@ -9,22 +10,48 @@ import { PropertyEntriesService } from '../services/property-service.service';
 })
 export class PropertyCreateComponent implements OnInit {
   
-  property: { name: string, floor_plan: Number, comments: string } = { name: '', floor_plan: 0, comments: '' }
+  property = { 
+    name: "", 
+    building: "", 
+    unit: "",
+    isActive: false,
+    address: {
+      apartment_num: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+    },
+    effective_date: Date,
+    end_date: Date,
+    floor_plan: 0,
+    max_occupancy: 0,
+    comments: "",
+    special_instructions: "",
+    rating: "Standard",
+    bathrooms: 0,
+    owned_by: "",
+    bedrooms: []
+  }
 
-  constructor(private propertiesService: PropertyEntriesService) { }
+  errorMessage: String;
+
+  constructor(private propertiesService: PropertyEntriesService, private myRouter: Router) { }
 
   ngOnInit() {
   }
 
-  submitEntry(entry){
-    this.propertiesService.createProperty(entry)
+  saveNewProperty(){
+    console.log("COMPONENT PROPERTY:",this.property);
+    this.property.address.apartment_num = this.property.unit
+    this.propertiesService.createProperty(this.property)
       .then(
         (res) => {
-          this.property = { name: '', floor_plan: 0, comments: '' }
+          this.myRouter.navigate(['/properties'])
         }
       )
       .catch(
-        err => this.property = entry
+        err => this.errorMessage = err
       )
   }
 }

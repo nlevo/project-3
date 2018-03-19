@@ -56,6 +56,7 @@ export class AuthService {
     );
   } // close login()
   logout() {
+    console.log("LOGOUT SERVICE TRIGGERED");
     return (
       this.myHttp
         .post(

@@ -11,9 +11,17 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./user-create.component.css']
 })
 export class UserCreateComponent implements OnInit {
-  newUser = {
-    userEmail: "",
-    userPhone: ""
+  
+  //object for new user
+  user = {
+      phone: "",
+      department: "",
+      position: "",
+      access: "",
+      email: "",
+      encryptedPassword: "",
+      status: "",
+      name: {first: "", last: ""}
   }
 
   saveError: String
@@ -29,28 +37,29 @@ export class UserCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
   }
 
   saveNewUser() {
-    if (this.myCoolUploader.getNotUploadedItems().length === 0) {
+    // if (this.myCoolUploader.getNotUploadedItems().length === 0) {
       this.saveUserNoImage();
-    } else {
-      this.savePhoneWithImage();
-    }
+    // } else {
+    //   this.saveUserWithImage();
+    // }
   }
 
-  private savePhoneWithImage(){
+  private saveUserWithImage(){
     this.myCoolUploader.onBuildItemForm = (item, form) => {
-      form.append('phoneBrand', this.newUser.userEmail);
-      form.append("phoneName", this.newUser.userPhone);
+      // form.append('phoneBrand', this.newUser.userEmail);
+      // form.append("phoneName", this.newUser.userPhone);
     }
     this.myCoolUploader.onSuccessItem = (item, response) =>{
-      this.newUser = {
-          userEmail: "",
-          userPhone: "",
-        };
+      // this.newUser = {
+      //     // userEmail: "",
+      //     // userPhone: "",
+      //   };
         this.saveError = ""
-        this.myRouter.navigate(["/phones"]);
+        this.myRouter.navigate(["/users"]);
     }
     this.myCoolUploader.onErrorItem = (item, response) => {
       this.saveError = "Saving phone with image went bad. Sorry!";
@@ -58,18 +67,22 @@ export class UserCreateComponent implements OnInit {
     this.myCoolUploader.uploadAll();
   }
 
-
   private saveUserNoImage(){
-    this.myUserService.createNewUser(this.newUser)
+    this.myUserService.createNewUser(this.user)
     .then( res => {
-      this.newUser = {
-        userEmail: '',
-        userPhone: ''
+      this.user = {
+        phone: "",
+        department: "",
+        position: "",
+        access: "",
+        email: "",
+        encryptedPassword: "",
+        status: "",
+        name: {first: "", last: ""}
       }
       this.saveError = "";
       this.myRouter.navigate(['/users'])
     })
     .catch( err => { this.saveError = "Something went wrong with saving"})
   }
-
 }

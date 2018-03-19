@@ -13,7 +13,7 @@ authRoutes.post('/api/signup', (req, res, next) => {
         res.status(400).json({message: "Please provide both, username and password."});
         return;
     }
-    User.findOne({ email: req.body.signUpEmail}, (err, userFromDb)=>{
+    User.findOne({ email: req.body.signUpEmail.toLowerCase()}, (err, userFromDb)=>{
         
         if(err){
             res.status(500).json({message: "Username check went bad."});
@@ -29,7 +29,7 @@ authRoutes.post('/api/signup', (req, res, next) => {
         const scrambledPassword = bcrypt.hashSync(req.body.signUpPassword, salt);
         
         const theUser = new User({
-           email: req.body.signUpEmail,
+           email: req.body.signUpEmail.toLowerCase(),
            encryptedPassword: scrambledPassword ,
            phone: req.body.signUpPhone
         });

@@ -12,18 +12,6 @@ import { AuthService } from '../services/authentification-service.service';
 export class UserProfileComponent implements OnInit {
   user = <any>{};
 
-  public updatedUser = {
-    // name: { first: String, last: String},
-    // password: String,
-    // phone: String,
-    // status: String,
-    // department: String,
-    // access: String,
-    // position: String
-  }
-
-
-
   public isDataAvailable:boolean = false;
     
   constructor(
@@ -82,7 +70,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   sendUpdatesToApi(id){
-    console.log("updates:", this.user)
     this.usersService.updateUser(id, this.user)
       .toPromise()
       .then(()=>{

@@ -30,7 +30,7 @@ passport.use(
       passwordField: "loginPassword" // sent through AJAX from Angular
     },
     (theEmail, thePassword, next) => {
-      UserModel.findOne({ email: theEmail }, (err, userFromDb) => {
+      UserModel.findOne({ email: theEmail.toLowerCase() }, (err, userFromDb) => {
         if (err) {
           next(err);
           return;

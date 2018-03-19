@@ -71,13 +71,29 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" data-toggle="collapse" (click)="logOut()" [routerLink]="['/logout']">
+            <a class="nav-link" data-toggle="collapse" (click)="logOut()">
               <i class="material-icons"></i>
               <p> Log out
                 <b class="caret"></b>
               </p>
             </a>
           </li>
+          <li class="nav-item ">
+              <a class="nav-link" data-toggle="collapse" [routerLink]="['/properties']">
+                <i class="material-icons"></i>
+                <p> Properties
+                  <b class="caret"></b>
+                </p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" data-toggle="collapse" [routerLink]="['/properties/new']">
+                <i class="material-icons"></i>
+                <p> Create Property
+                  <b class="caret"></b>
+                </p>
+              </a>
+            </li>
         </ul>
       </div>
     </div>
@@ -149,7 +165,9 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-          <router-outlet></router-outlet>  
+        <router-outlet ></router-outlet>
+        
+
       </div>
                 </div>
               </div>

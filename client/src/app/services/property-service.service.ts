@@ -12,23 +12,23 @@ export class PropertyEntriesService {
   constructor(private http: Http) { }
 
   getProperties(){
-    return this.http.get(`${this.BASE_URL}/properties`)
+    return this.http.get(`${this.BASE_URL}/properties`, { withCredentials: true })
       .toPromise()
       .then((res: Response) => res.json())
   }
 
   getProperty(id){
-    return this.http.get(`${this.BASE_URL}/properties/${id}`)
+    return this.http.get(`${this.BASE_URL}/properties/${id}`, { withCredentials: true })
       .toPromise()
       .then((res: Response) => res.json())
   }
 
   createProperty(property){
     const stringified = JSON.stringify(property);
-    const options = { headers: this.headers };
-
+    const options = { headers: this.headers, withCredentials: true };
+    console.log("SERVICE PROPERTY:",property);
     return this.http.post(
-      `${this.BASE_URL}/properties`,
+      `${this.BASE_URL}/properties`, 
       stringified,
       options
     )
