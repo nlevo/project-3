@@ -23,10 +23,10 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
       isActive: req.body.isActive,
       address: {
         apartment_num: req.body.apartment_num,
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
+        street: req.body.address.street,
+        city: req.body.address.city,
+        state: req.body.address.state,
+        zip: req.body.address.zip,
       },
       effective_date: req.body.effective_date,
       end_date: req.body.end_date,
@@ -41,7 +41,7 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
     if(req.file){
         newProperty.image = '/uploads' + req.file.filename;
     }
-
+    console.log("NEW OBJECT", newProperty);
     newProperty.save((err) => {
         if(err){
             res.status(500).json({message: "Some weird error from DB."});
@@ -53,6 +53,7 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
             res.status(400).json({
                 brandError: newProperty.errors.brand,
             });
+            console.log(brandError);
             return;
         }
         res.status(200).json(newProperty);
@@ -112,11 +113,28 @@ propertyRoutes.put('/api/properties/:id', (req, res, next) => {
         return;
     }
 
-    const updates = {
-      name: req.body.name,
+    const updates = new Property({
+      name: req.body.name, 
+      building: req.body.building, 
+      unit: req.body.unit,
+      isActive: req.body.isActive,
+      address: {
+        apartment_num: req.body.apartment_num,
+        street: req.body.adderess.street,
+        city: req.body.adderess.city,
+        state: req.body.address.state,
+        zip: req.body.address.zip,
+      },
+      effective_date: req.body.effective_date,
+      end_date: req.body.end_date,
       floor_plan: req.body.floor_plan,
-      comments: req.body.comments
-    };
+      max_occupancy: req.body.max_occupancy,
+      comments: req.body.comments,
+      special_instructions: req.body.special_instructions,
+      rating: req.body.rating,
+      bathrooms: req.body.bathrooms,
+      bedrooms: []
+    });
 
   Property.findByIdAndUpdate(req.params.id, updates, err => {
     if (err) {

@@ -39,7 +39,7 @@ const PropertySchema = new Schema({
         },
         bedrooms: [
             {
-                bedroom: { type: String, enum: ['Master', 'Guest', 'Media', 'Other']},
+                bedroom_type: { type: String, enum: ['Master', 'Guest', 'Media', 'Other']},
                 bedsize: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
             }
     ]

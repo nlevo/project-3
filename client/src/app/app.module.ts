@@ -1,6 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -16,10 +16,13 @@ import { AuthService } from "./services/authentification-service.service";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserServiceService} from './services/user-service.service';
+import { PropertyEntriesService } from './services/property-service.service'
+
 
 //for image uploads
 import { FileUploadModule } from "ng2-file-upload";
 import { UserListComponent } from './user-list/user-list.component';
+import { PropertyDetailsComponent } from './property-details/property-details.component';
 
 
 const routes: Routes = [
@@ -28,6 +31,7 @@ const routes: Routes = [
   { path: 'users/:id', component: UserProfileComponent},
   { path: 'users', component: UserListComponent},
   { path: 'properties/new', component: PropertyCreateComponent},
+  { path: 'properties/:id', component: PropertyDetailsComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'logout', redirectTo: ''},
@@ -47,16 +51,21 @@ const routes: Routes = [
     SignupComponent,
     DashboardComponent,
     UserCreateComponent,
-    UserListComponent
+    UserListComponent,
+    PropertyDetailsComponent,
+    
+    
+  
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    FileUploadModule
+    FileUploadModule,
   ],
-  providers: [SessionService, AuthService, UserServiceService],
+  providers: [SessionService, AuthService, UserServiceService, PropertyEntriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

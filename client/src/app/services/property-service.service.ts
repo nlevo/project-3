@@ -17,7 +17,7 @@ export class PropertyEntriesService {
       .then((res: Response) => res.json())
   }
 
-  getProperty(id){
+  getPropertyById(id){
     return this.http.get(`${this.BASE_URL}/properties/${id}`, { withCredentials: true })
       .toPromise()
       .then((res: Response) => res.json())
