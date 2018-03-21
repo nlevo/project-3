@@ -25,6 +25,7 @@ export class PropertyEntriesService {
 
   createProperty(property){
     const stringified = JSON.stringify(property);
+    console.log("STRINGIFY", stringified);
     const options = { headers: this.headers, withCredentials: true };
     console.log("SERVICE PROPERTY:",property);
     return this.http.post(

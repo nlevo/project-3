@@ -14,29 +14,29 @@ export class PropertyCreateComponent implements OnInit {
 
   public myForm: FormGroup; // our form model
 
-  property = { 
-    name: "", 
-    building: "", 
-    unit: "",
-    isActive: false,
-    address: {
-      apartment_num: "",
-      street: "",
-      city: "",
-      state: "",
-      zip: "",
-    },
-    effective_date: Date,
-    end_date: Date,
-    floor_plan: Number,
-    max_occupancy: Number,
-    comments: "",
-    special_instructions: "",
-    rating: "Standard",
-    bathrooms: Number,
-    owned_by: "",
-    bedrooms: []
-  }
+  // property = { 
+  //   name: "", 
+  //   building: "", 
+  //   unit: "",
+  //   isActive: false,
+  //   address: [{
+  //     apartment_num: "",
+  //     street: "",
+  //     city: "",
+  //     state: "",
+  //     zip: "",
+  //   }],
+  //   effective_date: [Date, [Validators.required]],
+  //   end_date: Date,
+  //   floor_plan: Number,
+  //   max_occupancy: Number,
+  //   comments: "",
+  //   special_instructions: "",
+  //   rating: "Standard",
+  //   bathrooms: Number,
+  //   owned_by: "",
+  //   bedrooms: ""
+  // }
 
   errorMessage: String;
 
@@ -51,20 +51,20 @@ export class PropertyCreateComponent implements OnInit {
      // we will initialize our form here
      this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
-      building: ['', [Validators.required, Validators.minLength(4)]],
-      unit: ['', [Validators.required, Validators.minLength(4)]],
+      building: ['', [Validators.required]],
+      unit: ['', [Validators.required]],
       bedrooms: this._fb.array([
         this.initBedroom(),
     ]),
       isActive: [false],
-      address: {
+      address: this._fb.group({
           apartment_num: '',
           street: '',
           city: '',
           state: '',
           zip: '',
-        },
-      effective_date: Date,
+        }),
+      effective_date: ['', [Validators.required]], 
       end_date: Date,
       floor_plan: Number,
       max_occupancy: Number,
@@ -72,7 +72,7 @@ export class PropertyCreateComponent implements OnInit {
       special_instructions: this._fb.array([
         this.initInstruction(),
     ]),
-      rating: '',
+      tier: 'Standard',
       bathrooms: Number
   })
 }
@@ -82,7 +82,17 @@ export class PropertyCreateComponent implements OnInit {
   initBedroom() {
     // initialize our bedroom
     return this._fb.group({
-      bedroom_type: ['', Validators.required],
+      bedroom_type: '',
+      bedsize1: "",
+      bedsize2: "",
+      bedsize3: "",
+      bedsize4: ""
+    });
+  }
+
+  initBedsize() {
+    // initialize our bedsize
+    return this._fb.group({
       bedsize: ''
     });
   }
@@ -98,7 +108,7 @@ export class PropertyCreateComponent implements OnInit {
 ///////////ADD/////////////
   addBedroom() {
     // add bedroom to the list
-    const control = <FormArray>this.myForm.controls['bedrooms'];
+    const control = this.myForm.get('bedrooms') as FormArray;
     control.push(this.initBedroom());
   }
 
@@ -124,11 +134,12 @@ export class PropertyCreateComponent implements OnInit {
 
 ///////////REMOVE-END////////
 
-  saveNewProperty(){
-    console.log("COMPONENT PROPERTY:",this.property);
-    this.property.address.apartment_num = this.property.unit
-    this.propertiesService.createProperty(this.property)
-      .then(
+
+
+  save(model: Property) {
+    // call API to save customer
+    this.propertiesService.createProperty(model['value'])
+    .then(
         (res) => {
           this.myRouter.navigate(['/properties'])
         }
@@ -136,11 +147,6 @@ export class PropertyCreateComponent implements OnInit {
       .catch(
         err => this.errorMessage = err
       )
+    console.log("MODEL:", model['value']);
   }
-
-  save(model: Property) {
-    // call API to save customer
-    console.log(model);
-  }
-  
 }

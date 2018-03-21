@@ -13,7 +13,6 @@ const PropertySchema = new Schema({
         unit: String,
         isActive: Boolean,
         address: {
-            apartment_num: String,
             street: String,
             city: String,
             state: String,
@@ -27,10 +26,12 @@ const PropertySchema = new Schema({
         floor_plan: Number,
         max_occupancy: Number,
         comments: [String],
-        special_instructions: [String],
-        rating: {
+        special_instructions: [{
+            instruction: [String]
+        }],
+        tier: {
             type: String,
-            enum: ['Standard', 'Preffered', "Elite"]
+            enum: ['Standard', 'Preffered', 'Elite'],
         },
         bathrooms: Number,
         owned_by: {
@@ -39,8 +40,11 @@ const PropertySchema = new Schema({
         },
         bedrooms: [
             {
-                bedroom_type: { type: String, enum: ['Master', 'Guest', 'Media', 'Other']},
-                bedsize: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
+                bedroom_type: { type: String, enum: ['Master', 'Guest', 'Media', 'Living', 'Other']},
+                bedsize1: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
+                bedsize2: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
+                bedsize3: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
+                bedsize4: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
             }
     ]
     },

@@ -17,20 +17,27 @@ export interface Property {
     max_occupancy: Number,
     comments: string,
     special_instructions: Instruction[],
-    rating: string,
+    tier: string,
     bathrooms: Number,
     owned_by: Owner[],
 }
 
 export interface Bedroom {
     bedroom_type: string;  
-    bedsize: string;
+    bedsize1: string,
+    bedsize2: string,
+    bedsize3: string,
+    bedsize4: string,
 }
 
 export interface Instruction {
     instruction: string;
 }
 
+export interface Bedsize {
+    bedsize: string;
+}
+
 export interface Owner {
-    owner_id: Object
+    owner_id: Object,
 }

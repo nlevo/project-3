@@ -22,7 +22,6 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
       unit: req.body.unit,
       isActive: req.body.isActive,
       address: {
-        apartment_num: req.body.apartment_num,
         street: req.body.address.street,
         city: req.body.address.city,
         state: req.body.address.state,
@@ -34,10 +33,11 @@ propertyRoutes.post('/api/properties', myUploader.single('phonePic'), (req, res,
       max_occupancy: req.body.max_occupancy,
       comments: req.body.comments,
       special_instructions: req.body.special_instructions,
-      rating: req.body.rating,
+      tier: req.body.tier,
       bathrooms: req.body.bathrooms,
-      bedrooms: []
+      bedrooms: req.body.bedrooms
     });
+    console.log("OBJECT COMING FROM ANGULAR",newProperty);
     if(req.file){
         newProperty.image = '/uploads' + req.file.filename;
     }
@@ -119,7 +119,6 @@ propertyRoutes.put('/api/properties/:id', (req, res, next) => {
       unit: req.body.unit,
       isActive: req.body.isActive,
       address: {
-        apartment_num: req.body.apartment_num,
         street: req.body.adderess.street,
         city: req.body.adderess.city,
         state: req.body.address.state,
@@ -131,9 +130,9 @@ propertyRoutes.put('/api/properties/:id', (req, res, next) => {
       max_occupancy: req.body.max_occupancy,
       comments: req.body.comments,
       special_instructions: req.body.special_instructions,
-      rating: req.body.rating,
+      tier: req.body.tier,
       bathrooms: req.body.bathrooms,
-      bedrooms: []
+      bedrooms: req.body.bedrooms
     });
 
   Property.findByIdAndUpdate(req.params.id, updates, err => {
