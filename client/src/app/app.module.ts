@@ -23,6 +23,7 @@ import { PropertyEntriesService } from './services/property-service.service'
 import { FileUploadModule } from "ng2-file-upload";
 import { UserListComponent } from './user-list/user-list.component';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
+import { PropertyEditComponent } from './property-edit/property-edit.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent},
   { path: 'properties/new', component: PropertyCreateComponent},
   { path: 'properties/:id', component: PropertyDetailsComponent},
+  { path: 'properties/:id/edit', component: PropertyEditComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'logout', redirectTo: ''},
@@ -53,8 +55,7 @@ const routes: Routes = [
     UserCreateComponent,
     UserListComponent,
     PropertyDetailsComponent,
-    
-    
+    PropertyEditComponent,
   
   ],
   imports: [

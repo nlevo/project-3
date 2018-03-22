@@ -70,11 +70,5 @@ export class UserProfileComponent implements OnInit {
   }
 
   sendUpdatesToApi(id){
-    this.usersService.updateUser(id, this.user)
-      .toPromise()
-      .then(()=>{
-        this.myRouter.navigate(['/users'])
-      })
-      .catch()
-  }
+    
 }

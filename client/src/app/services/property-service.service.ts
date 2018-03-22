@@ -37,4 +37,8 @@ export class PropertyEntriesService {
       .then((response: Response) => response.json())
       .catch((error: Response) => Promise.reject(error ))
   }
+  updateProperty(id, updates){
+    return this.http.put(`${this.BASE_URL}/properties/${id}`, updates, { withCredentials: true })
+    .map(res => res.json());
+  }
 }
