@@ -12,7 +12,8 @@ import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 })
 export class PropertyCreateComponent implements OnInit {
 
-  public myForm: FormGroup; // our form model
+  public myForm : FormGroup; // our form model
+  public isReady: boolean;
 
   // property = { 
   //   name: "", 
@@ -29,7 +30,7 @@ export class PropertyCreateComponent implements OnInit {
   //   effective_date: [Date, [Validators.required]],
   //   end_date: Date,
   //   floor_plan: Number,
-  //   max_occupancy: Number,
+  //   max_occupancy: Number,`
   //   comments: "",
   //   special_instructions: "",
   //   rating: "Standard",
@@ -74,7 +75,9 @@ export class PropertyCreateComponent implements OnInit {
     ]),
       tier: 'Standard',
       bathrooms: Number
+
   })
+  this.isReady = true;
 }
 
 

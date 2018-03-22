@@ -71,4 +71,5 @@ export class UserProfileComponent implements OnInit {
 
   sendUpdatesToApi(id){
     
+  }
 }
