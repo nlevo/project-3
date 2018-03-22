@@ -40,11 +40,11 @@ const PropertySchema = new Schema({
         },
         bedrooms: [
             {
-                bedroom_type: { type: String, enum: ['Master', 'Guest', 'Media', 'Living', 'Other']},
-                bedsize1: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
-                bedsize2: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
-                bedsize3: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
-                bedsize4: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa']},
+                bedroom_type: { type: String, enum: ['Master', 'Guest', 'Media', 'Living', 'Other', '']},
+                bedsize1: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa', '']},
+                bedsize2: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa', '']},
+                bedsize3: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa', '']},
+                bedsize4: { type: String, enum: ['King', 'California King', 'Queen', 'Full', 'Twin', 'Bunk Bed', 'Trundle Bed', 'Murphy', 'Sofa', '']},
             }
     ]
     },

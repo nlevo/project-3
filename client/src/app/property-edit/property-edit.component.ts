@@ -24,7 +24,7 @@ export class PropertyEditComponent implements OnInit {
     private myRouter: Router,
     private _fb: FormBuilder,
     private myRoute: ActivatedRoute,
-    private myAuthService: AuthService
+    private myAuthService: AuthService,
 
   ) { }
 
@@ -132,15 +132,15 @@ export class PropertyEditComponent implements OnInit {
   update(id, model: Property) {
     // call API to uodate property
     //console.log("THIS IS ID: ", id);
-    //console.log("THIS IS MODEL: ", model['value']);
+    console.log("THIS IS MODEL: ", model['value']);
     this.propertiesService.updateProperty(id, model['value'])
       .toPromise()
-      .then(()=>{
+      .then(() => {
         this.myRouter.navigate([`/properties/${id}`])
       })
       .catch()
   }
- 
+
   getProperty(id) {
     this.propertiesService.getPropertyById(id).then(thePropertyDetails => {
       this.property = thePropertyDetails;
@@ -158,11 +158,16 @@ export class PropertyEditComponent implements OnInit {
       });
 
       //have to remove time and seconds from the date strings, otherwise html date tag won't show it
-      this.property.effective_date = this.property.effective_date.slice(0, -14);
-      this.property.end_date = this.property.end_date.slice(0, -14);
-
+      if (this.property.effective_date) {
+        this.property.effective_date = this.property.effective_date.slice(0, -14);
+      }
+      if (this.property.end_date) {
+        this.property.end_date = this.property.end_date.slice(0, -14);
+      }
       this.myForm.patchValue(this.property);
     });
   }
+
+
 
 }

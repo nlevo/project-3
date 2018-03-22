@@ -125,8 +125,8 @@ propertyRoutes.put('/api/properties/:id', (req, res, next) => {
       state: req.body.address.state,
       zip: req.body.address.zip,
     },
-    effective_date: new Date(req.body.effective_date),
-    end_date: new Date(req.body.end_date),
+    effective_date: req.body.effective_date,
+    end_date: req.body.end_date,
     floor_plan: req.body.floor_plan,
     max_occupancy: req.body.max_occupancy,
     comments: req.body.comments,
@@ -145,14 +145,14 @@ propertyRoutes.put('/api/properties/:id', (req, res, next) => {
       return;
     }
 
-    res.json({
+    return res.json({
       message: "Property updated successfully."
     });
   });
 });
 
 // delete property
-propertyRoutes.delete("/api/property/:id", (req, res, next) => {
+propertyRoutes.delete("/api/properties/:id", (req, res, next) => {
   if (!req.user) {
     res.status(401).json({ message: "Log in to delete the property." });
     return;

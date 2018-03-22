@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
     .then(()=>{
       this._router.navigate(['/login'])
       console.log("AFTER NAVIGATE TRIGGERED");
+      
     })
     .catch()
   }
